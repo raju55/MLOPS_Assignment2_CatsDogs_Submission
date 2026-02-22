@@ -1,0 +1,31 @@
+stages:
+  ingest:
+    cmd: python -m src.catsdogs.data_ingest
+    deps:
+      - src/catsdogs/data_ingest.py
+      - src/catsdogs/config.py
+    outs:
+      - data/raw/kagglecatsanddogs_5340.zip
+      - data/raw/PetImages
+
+  preprocess:
+    cmd: python -m src.catsdogs.preprocess
+    deps:
+      - src/catsdogs/preprocess.py
+      - src/catsdogs/config.py
+      - data/raw/PetImages
+    outs:
+      - data/processed
+
+  train:
+    cmd: python -m src.catsdogs.train
+    deps:
+      - src/catsdogs/train.py
+      - src/catsdogs/model.py
+      - src/catsdogs/predict.py
+      - src/catsdogs/config.py
+      - data/processed
+    outs:
+      - models/catsdogs_cnn.pt
+      - artifacts/plots
+      - artifacts/metrics
