@@ -47,7 +47,7 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}/catsdogs-api:latest
 
-      - name: Deploy with docker-compose
+      - name: Deploy with docker compose
         run: |
           docker compose -f deployment/docker-compose.yml up -d --build
 
